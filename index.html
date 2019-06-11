@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Kariyer.Net - Yavuz Metin KOÇ</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <script type="text/x-template" id="grid-template">
+            <table>
+                <thead>
+                    <tr>
+                        <th
+                            v-for="key in columns"
+                            @click="sortBy(key)"
+                            :class="{ active: sortKey == key }">
+                            {{ key | capitalize }}
+                            <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="entry in filteredHeroes">
+                        <td v-for="key in columns" v-if="entry[key].indexOf('https')==-1">
+                            {{ entry[key] }}
+                        </td>
+                        <td v-for="key in columns" v-if="entry[key].indexOf('https')!=-1">
+                          
+                            <img v-bind:src="entry[key]" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </script>
+
+        <!-- demo root element -->
+        <div id="demo">
+            <br/>
+            <form id="search">
+                Arama
+                <input name="query" v-model="searchQuery"><br/><br/>
+            </form>
+            <demo-grid :heroes="gridData" :columns="gridColumns" :filter-key="searchQuery"></demo-grid>
+        </div>
+        <script src="main.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </body>
+</html>
